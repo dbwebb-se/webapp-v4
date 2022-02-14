@@ -1,0 +1,23 @@
+#
+# This file has two meanings.
+# First create these directories on dbwebb init-me in the me-dir.
+# Map item to dirname while doing, for example, dbwebb validate lab1
+#
+
+# kmom01
+me/kmom01/typography
+
+# kmom02
+me/kmom02/jq
+
+# kmom03
+me/kmom03/formular
+
+# kmom04
+me/kmom04/tabeller
+
+# kmom10
+me/kmom10/proj
+
+# lager
+me/lager
