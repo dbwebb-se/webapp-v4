@@ -1,11 +1,7 @@
-Webbapplikationer för mobila enheter (Web applications for mobile devices) - webapp
+Webbapplikationer för mobila enheter (Web applications for mobile devices) - webapp-v4
 ===================
 
-[![Join the chat at https://gitter.im/mosbth/webapp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mosbth/webapp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/dbwebb-se/webapp.svg?branch=master)](https://travis-ci.org/dbwebb-se/webapp)
-[![CircleCI](https://circleci.com/gh/dbwebb-se/webapp.svg?style=svg)](https://circleci.com/gh/dbwebb-se/webapp)
-
-Course material for webapp-course, aimed at a swedish target audience as an introduction to web programmering for computer science students at University level. 
+Course material for webapp-v4, aimed at a swedish target audience as an introduction to web programmering for computer science students at University level.
 
 Relased as part of a University course: https://dbwebb.se/kurser/webapp
 
@@ -26,5 +22,5 @@ Feel free to help building up the repository with more content suited for traini
 
 ```
  .
-..:  Copyright (c) 2015-2018 dbwebb et al, info@dbwebb.se
+..:  Copyright (c) 2015-2022 dbwebb et al, info@dbwebb.se
 ```
