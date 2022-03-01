@@ -27,10 +27,15 @@ KMOM="$4"
 ACRONYM="$3"
 
 # Catches and replaces for student acronym
+GITHUB_URL=""
 case "$5" in
-    "-a" | "--acronym" )
-        ACRONYM="$6"        ;;
+    "-u" | "--url" )
+        GITHUB_URL="$6"        ;;
 esac
+
+if [ "$GITHUB_URL" != "" ]; then
+    echo "Should clone student repo to me/lager."
+fi
 
 echo "======================================="
 echo "  Testing Output webapp-v4   "
