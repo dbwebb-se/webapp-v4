@@ -26,7 +26,9 @@ COURSE_NICK="$2"
 KMOM="$4"
 ACRONYM="$3"
 
-# Catches and replaces for student acronym
+# Catches and replaces for GitHub
+# --url is served from autocorrection
+# directly from canvas
 GITHUB_URL=""
 case "$5" in
     "-u" | "--url" )
@@ -34,7 +36,8 @@ case "$5" in
 esac
 
 if [ "$GITHUB_URL" != "" ]; then
-    echo "Should clone student repo to me/lager."
+    rm -rf "$COURSE_REPO_BASE"/me/lager/{*,.*} 2> /dev/null
+    git clone "$GITHUB_URL" "$COURSE_REPO_BASE/me/lager/" --quiet
 fi
 
 echo "======================================="
@@ -44,9 +47,9 @@ echo "======================================="
 
 CONF_FILE="$COURSE_REPO_BASE/me/lager/.dbwebb-conf.json"
 if test -f "$CONF_FILE"; then
-    echo "Configuration file exists."
+    echo -e "\U0001F973\tConfiguration file exists."
 else
-    echo "$CONF_FILE does not exists."
+    echo -e "\U0001F928\t$CONF_FILE does not exists."
     exit 1
 fi
 
@@ -54,22 +57,24 @@ EXPO_LINK="$(cat "$CONF_FILE" | jq .expo)"
 GITHUB_LINK="$(cat "$CONF_FILE" | jq .github)"
 
 if [ "$EXPO_LINK" != "" ]; then
-    echo "Expo link found."
+    echo -e "\U0001F973\tExpo link found."
 else
-    echo "No Expo link."
+    echo -e "\U0001F928\tNo Expo link."
     exit 1
 fi
 
 if [ "$GITHUB_LINK" != "" ]; then
     if [ "$GITHUB_LINK" != "https://github.com/dbwebb-se/webapp-v4.git" ]; then
-        echo "GitHub link found."
+        echo -e "\U0001F973\tGitHub link found."
     else
-        echo "GitHub link not changed from default."
+        echo -e "\U0001F928\tGitHub link not changed from default."
         exit 1
     fi
 else
-    echo "No GitHub link."
+    echo -e "\U0001F928\tNo GitHub link."
     exit 1
 fi
+
+echo -e "\U0001F973\tAll files and links found."
 
 exit 0
