@@ -26,6 +26,19 @@ COURSE_NICK="$2"
 KMOM="$4"
 ACRONYM="$3"
 
+echo "======================================="
+echo "  Testing Output webapp-v4   "
+echo "  Testing $KMOM for $ACRONYM    "
+echo -e "=======================================\n"
+
+
+# Checks for specified KMOM
+if [ -z "$KMOM" ]; then
+   echo -e "\U0001F928\tPlease specify kmom. dbwebb test kmom**"
+   exit 1
+fi
+
+
 # Catches and replaces for GitHub
 # --url is served from autocorrection
 # directly from canvas
@@ -40,11 +53,6 @@ if [ "$GITHUB_URL" != "" ]; then
     git clone "$GITHUB_URL" "$COURSE_REPO_BASE/me/lager/" --quiet
 fi
 
-echo "======================================="
-echo "  Testing Output webapp-v4   "
-echo "  Testing $KMOM for $ACRONYM    "
-echo "======================================="
-
 CONF_FILE="$COURSE_REPO_BASE/me/lager/.dbwebb-conf.json"
 if test -f "$CONF_FILE"; then
     echo -e "\U0001F973\tConfiguration file exists."
@@ -53,8 +61,8 @@ else
     exit 1
 fi
 
-EXPO_LINK="$(cat "$CONF_FILE" | jq .expo)"
-GITHUB_LINK="$(cat "$CONF_FILE" | jq .github)"
+EXPO_LINK="$(cat "$CONF_FILE" | jq .expo | sed -e "s/\"//ig")"
+GITHUB_LINK="$(cat "$CONF_FILE" | jq .github | sed -e "s/\"//ig")"
 
 if [ "$EXPO_LINK" != "" ]; then
     echo -e "\U0001F973\tExpo link found."
@@ -77,4 +85,20 @@ fi
 
 echo -e "\U0001F973\tAll files and links found."
 
-exit 0
+echo -e "\n======================================="
+echo "  JEST testing output   "
+echo -e "=======================================\n"
+
+cp "$COURSE_REPO_BASE/.dbwebb/test/jest/$KMOM.test.js" "$COURSE_REPO_BASE/me/lager"
+
+TEST_OUTPUT=$(cd "$COURSE_REPO_BASE/me/lager" && npm test)
+JEST_EXIT_CODE="$?"
+
+if [ $JEST_EXIT_CODE -ne 0 ]; then
+    echo -e "\U0001F928\tTests did not pass."
+    echo "$TEST_OUTPUT"
+else
+    echo -e "\U0001F973\tTests did pass. Well done!"
+fi
+
+exit $JEST_EXIT_CODE
