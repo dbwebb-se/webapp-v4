@@ -94,6 +94,8 @@ cp "$COURSE_REPO_BASE/.dbwebb/test/jest/$KMOM.test.js" "$COURSE_REPO_BASE/me/lag
 TEST_OUTPUT=$(cd "$COURSE_REPO_BASE/me/lager" && npm test)
 JEST_EXIT_CODE="$?"
 
+# rm "$COURSE_REPO_BASE/me/lager/$KMOM.test.js"
+
 if [ $JEST_EXIT_CODE -ne 0 ]; then
     echo -e "\U0001F928\tTests did not pass."
     echo "$TEST_OUTPUT"
