@@ -85,22 +85,23 @@ fi
 
 echo -e "\U0001F973\tAll files and links found."
 
-echo -e "\n======================================="
-echo "  JEST testing output   "
-echo -e "=======================================\n"
+# echo -e "\n======================================="
+# echo "  JEST testing output   "
+# echo -e "=======================================\n"
+#
+# cp "$COURSE_REPO_BASE/.dbwebb/test/jest/$KMOM.test.js" "$COURSE_REPO_BASE/me/lager"
+#
+# TEST_OUTPUT=$(cd "$COURSE_REPO_BASE/me/lager" && npm test)
+# JEST_EXIT_CODE="$?"
+#
+# # rm "$COURSE_REPO_BASE/me/lager/$KMOM.test.js"
+#
+# if [ $JEST_EXIT_CODE -ne 0 ]; then
+#     echo -e "\U0001F928\tTests did not pass."
+#     echo "$TEST_OUTPUT"
+# else
+#     echo -e "\U0001F973\tTests did pass. Well done!"
+# fi
 
-cp "$COURSE_REPO_BASE/.dbwebb/test/jest/$KMOM.test.js" "$COURSE_REPO_BASE/me/lager"
-
-TEST_OUTPUT=$(cd "$COURSE_REPO_BASE/me/lager" && npm test)
-JEST_EXIT_CODE="$?"
-
-# rm "$COURSE_REPO_BASE/me/lager/$KMOM.test.js"
-
-if [ $JEST_EXIT_CODE -ne 0 ]; then
-    echo -e "\U0001F928\tTests did not pass."
-    echo "$TEST_OUTPUT"
-else
-    echo -e "\U0001F973\tTests did pass. Well done!"
-fi
-
-exit $JEST_EXIT_CODE
+echo "$EXPO_LINK"
+exit 0
