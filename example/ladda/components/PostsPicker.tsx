@@ -5,10 +5,12 @@ import { getPosts } from "../models/posts";
 
 import { Picker } from '@react-native-picker/picker';
 
-export default function PostsPicker({ booking, setBooking }) {
+import distanceBetweenCoordinates from "../models/distance";
+
+export default function PostsPicker({ booking, setBooking, currentGPSLocation }) {
     const [posts, setPosts] = useState<Post[]>([]);
 
-    const itemsList = posts.map((post, index) => {
+    const itemsList = posts.filter((post) => distanceBetweenCoordinates(post, currentGPSLocation) < 100).map((post, index) => {
         return <Picker.Item key={index} label={post.name} value={index+1} />;
     });
 

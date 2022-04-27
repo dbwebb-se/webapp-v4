@@ -6,7 +6,7 @@ import { Base, Typography, Forms } from '../styles';
 import PostsPicker from './PostsPicker';
 import StartTimePicker from './StartTimePicker';
 
-export default function Book() {
+export default function Book({currentGPSLocation}) {
     const [booking, setBooking] = useState<Partial<Booking>>({});
 
     async function doBooking() {
@@ -18,7 +18,7 @@ export default function Book() {
             <Text style={{ fontSize: 48 }}>Boka</Text>
 
             <Text>Laddstolpe</Text>
-            <PostsPicker booking={booking} setBooking={setBooking} />
+            <PostsPicker booking={booking} setBooking={setBooking} currentGPSLocation={currentGPSLocation} />
 
             <Text>Starttid</Text>
             <StartTimePicker booking={booking} setBooking={setBooking}/>
@@ -58,4 +58,3 @@ export default function Book() {
         </ScrollView>
     );
 };
-

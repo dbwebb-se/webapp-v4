@@ -1,40 +1,91 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import { getPosts } from '../models/posts';
 import Post from '../interfaces/post';
 
-function distanceBetweenCoordinates(post, position) {
-  const R = 6371e3; // metres
-  const φ1 = post.latitude * Math.PI/180; // φ, λ in radians
-  const φ2 = position.latitude * Math.PI/180;
-  const Δφ = (position.latitude-post.latitude) * Math.PI/180;
-  const Δλ = (position.longitude-post.longitude) * Math.PI/180;
+import MapView from 'react-native-maps';
+import { Marker } from "react-native-maps";
 
-  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-            Math.cos(φ1) * Math.cos(φ2) *
-            Math.sin(Δλ/2) * Math.sin(Δλ/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+import * as Location from 'expo-location';
 
-  const d = R * c; // in metres
-  return d;
-}
+import distanceBetweenCoordinates from "../models/distance";
 
-
-export default function PostList() {
+export default function PostList({currentGPSLocation, setCurrentGPSLocation}) {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [locationMarker, setLocationMarker] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const map = useRef(null);
 
   useEffect(async () => {
     setPosts(await getPosts());
   }, []);
 
-  const listOfPosts = posts.map((post, index) => {
-    return <Text key={index} style={{fontSize: 40, marginBottom: 32}}>{post.identifier}: {post.name}</Text>
+  useEffect(() => {
+    (async () => {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status !== 'granted') {
+            setErrorMessage('Permission to access location was denied');
+            return;
+        }
+
+        const currentLocation = await Location.getCurrentPositionAsync({});
+
+        setCurrentGPSLocation(currentLocation.coords);
+
+        setLocationMarker(<Marker
+            coordinate={{
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude
+            }}
+            title="Min plats"
+            pinColor="blue"
+        />);
+    })();
+  }, []);
+
+  const postMarkers = posts.map((post, index) => {
+    return <Marker
+        key={index}
+        identifier={post.identifier}
+        coordinate={{ latitude: post.latitude, longitude: post.longitude }}
+        title={post.name}
+        />
   });
 
+  if (map?.current && postMarkers.length > 0) {
+    const markerIDs = posts.map((post) => post.identifier);
+
+    map.current.fitToSuppliedMarkers(markerIDs, true);
+  }
+
   return (
-    <ScrollView>
-      {listOfPosts}
-    </ScrollView>
+    <View style={styles.container}>
+      <MapView
+        ref={map}
+        style={styles.map}
+        initialRegion={{
+            latitude: 56.1612,
+            longitude: 15.5869,
+            latitudeDelta: 0.001,
+            longitudeDelta: 0.001,
+        }}>
+          {postMarkers}
+          {locationMarker}
+        </MapView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
+});
