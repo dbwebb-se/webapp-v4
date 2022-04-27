@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 
-import Posts from "./components/Posts";
+import PostList from "./components/PostList";
 import Book from "./components/Book";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Laddstolpar" component={Posts} />
+          <Tab.Screen name="Laddstolpar" component={PostList} />
           <Tab.Screen name="Boka" component={Book} />
         </Tab.Navigator>
       </NavigationContainer>

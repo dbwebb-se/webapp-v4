@@ -8,8 +8,6 @@ import { Picker } from '@react-native-picker/picker';
 export default function PostsPicker({ booking, setBooking }) {
     const [posts, setPosts] = useState<Post[]>([]);
 
-    console.log(posts);
-
     const itemsList = posts.map((post, index) => {
         return <Picker.Item key={index} label={post.name} value={index+1} />;
     });

@@ -27,7 +27,7 @@ export default function Book() {
             <TextInput
                 style={Forms.input}
                 onChangeText={(content: string) => {
-                    setBooking({ ...booking, username: content })
+                    setBooking({ ...booking, username: content.trim() })
                 }}
                 value={booking?.username}
             />
