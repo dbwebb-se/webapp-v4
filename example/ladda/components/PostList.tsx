@@ -55,17 +55,21 @@ export default function PostList({currentGPSLocation, setCurrentGPSLocation}) {
         />
   });
 
-  if (map?.current && postMarkers.length > 0) {
-    const markerIDs = posts.map((post) => post.identifier);
-
-    map.current.fitToSuppliedMarkers(markerIDs, true);
+  function fitMarkers() {
+    if (map?.current) {
+      const markerIDs = posts.map((post) => post.identifier);
+      map.current.fitToSuppliedMarkers(markerIDs, true);
+    }
   }
 
   return (
     <View style={styles.container}>
       <MapView
         ref={map}
+        key={posts.length}
         style={styles.map}
+        onMapReady={fitMarkers}
+        onMapLoaded={fitMarkers}
         initialRegion={{
             latitude: 56.1612,
             longitude: 15.5869,
