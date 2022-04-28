@@ -56,7 +56,7 @@ export default function PostList({currentGPSLocation, setCurrentGPSLocation}) {
   });
 
   function fitMarkers() {
-    if (map?.current) {
+    if (map?.current && posts.length) {
       const markerIDs = posts.map((post) => post.identifier);
       map.current.fitToSuppliedMarkers(markerIDs, true);
     }
