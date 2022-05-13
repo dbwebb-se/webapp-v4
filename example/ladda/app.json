@@ -4,9 +4,9 @@
     "slug": "ladda",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/charging.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/charging.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emilfolino.ladda"
     },
     "android": {
       "adaptiveIcon": {
